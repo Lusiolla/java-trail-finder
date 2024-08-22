@@ -4,14 +4,14 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
+/*@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "trails")
+@Table(name = "trails")*/
 public class Trail {
-    @Id
+   /* @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
@@ -20,9 +20,10 @@ public class Trail {
     private String description;
     @ManyToMany
     @JoinTable(
-            name = "points_of_trails",
-            joinColumns = {@JoinColumn(name = "trails_id")},
-            inverseJoinColumns = {@JoinColumn(name = "points_id")}
+            //name = "points_of_trails",
+            //joinColumns = {@JoinColumn(name = "trails_id")},
+            //inverseJoinColumns = {@JoinColumn(name = "points_id")}
     )
-    private Collection<Point> points;
+
+    private Collection<Point> points;*/
 }

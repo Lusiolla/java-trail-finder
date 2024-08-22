@@ -11,10 +11,10 @@
     </parent>
 
     <groupId>lu.karpychev</groupId>
-    <artifactId>java-trail-seeker</artifactId>
+    <artifactId>java-trail-finder</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Trail Seeker</name>
+    <name>Trail Finder</name>
 
     <dependencies>
         <dependency>
