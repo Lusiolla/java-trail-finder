@@ -17,14 +17,13 @@ public class TrailDaoImpl implements TrailDao {
     private final JdbcTemplate jdbcTemplate;
 
 
-
     @Override
-    public Trail add(Trail trail) {
+    public Trail add(Trail newTrail) {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("trails")
                 .usingGeneratedKeyColumns("id");
-        trail.setId(simpleJdbcInsert.executeAndReturnKey(trailToMap(trail)).longValue());
-        return trail;
+        newTrail.setId(simpleJdbcInsert.executeAndReturnKey(trailToMap(newTrail)).longValue());
+        return newTrail;
     }
 
 
@@ -36,7 +35,6 @@ public class TrailDaoImpl implements TrailDao {
         //values.put("type_id",trail.getType().getId());
         //values.put("duration", trail.getDuration());
         //values.put("complexity", trail.getComplexity());
-
 
         return values;
     }

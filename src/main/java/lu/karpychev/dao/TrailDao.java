@@ -4,6 +4,6 @@ import lu.karpychev.model.Trail;
 
 public interface TrailDao {
 
-    Trail add(Trail trail);
+    Trail add(Trail newTrail);
 
 }
