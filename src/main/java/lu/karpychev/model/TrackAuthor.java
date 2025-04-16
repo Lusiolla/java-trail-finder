@@ -7,9 +7,9 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
 @Data
-@XmlRootElement
+@XmlRootElement (name = "author")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Author {
+public class TrackAuthor {
     @XmlElement
     String name;
 }

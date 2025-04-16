@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement
-public class Link {
+@XmlRootElement (name = "link")
+public class TrackLink {
 
     @XmlAttribute(name = "href")
     private String URL;

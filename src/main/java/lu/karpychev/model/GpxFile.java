@@ -7,8 +7,9 @@ import java.util.List;
 
 @Data
 @XmlRootElement(name = "gpx", namespace = "http://www.topografix.com/GPX/1/1")
+//@XmlType(propOrder = { "version", "creator", "schemaLocation", "metadata" , "tracks"})
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TrackFile {
+public class GpxFile {
     @XmlAttribute
     private String version;
     @XmlAttribute
@@ -17,6 +18,6 @@ public class TrackFile {
     private String schemaLocation;
     @XmlElement
     private Metadata metadata;
-    @XmlElement(name = "trk")
+    @XmlElement(name = "trk", namespace = "http://www.topografix.com/GPX/1/1")
     private List<Track> tracks;
 }
