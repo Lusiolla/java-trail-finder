@@ -21,7 +21,7 @@ public class GpxFileService {
 
     public File marshal(GpxFile trackFile) throws JAXBException, IOException {
 
-        File file = new File(path + trackFile.getMetadata().getName());
+        File file = new File(path + trackFile.getMetadata().getName() + ".gpx");
 
         JAXBContext context = JAXBContext.newInstance(GpxFile.class);
         Marshaller mar = context.createMarshaller();
