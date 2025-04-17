@@ -1,9 +1,8 @@
 
-
 @jakarta.xml.bind.annotation.XmlSchema(
         namespace = "http://www.topografix.com/GPX/1/1",
         elementFormDefault = XmlNsForm.QUALIFIED,
-xmlns = @XmlNs(prefix = "", namespaceURI = "http://www.topografix.com/GPX/1/1"))
+        xmlns = @XmlNs(prefix = "", namespaceURI = "http://www.topografix.com/GPX/1/1"))
 
 
 package lu.karpychev.model;

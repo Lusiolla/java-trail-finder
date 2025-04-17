@@ -4,7 +4,6 @@ import jakarta.xml.bind.JAXBException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-
 import lu.karpychev.dao.TrackDao;
 import lu.karpychev.model.*;
 import lu.karpychev.service.GpxFileService;
@@ -28,7 +27,7 @@ public class TrackController {
     @RequestMapping("/tracks")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public File echoXmlTrack(@RequestParam ("file") MultipartFile file) throws JAXBException, IOException {
+    public File echoXmlTrack(@RequestParam("file") MultipartFile file) throws JAXBException, IOException {
         return service.marshal(service.unmarshalTrack(file));
     }
 
