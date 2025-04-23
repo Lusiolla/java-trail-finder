@@ -1,4 +1,4 @@
-package lu.karpychev.model;
+package lu.karpychev.trailfinder.model;
 
 import jakarta.xml.bind.annotation.*;
 import lombok.Data;

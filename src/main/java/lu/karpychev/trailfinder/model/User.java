@@ -1,11 +1,13 @@
-package lu.karpychev.model;
+package lu.karpychev.trailfinder.model;
 
 import lombok.*;
+
+import java.util.UUID;
 
 @Data
 public class User {
 
-    private Long id;
+    private UUID id;
     private String firstName;
     private String secondName;
 

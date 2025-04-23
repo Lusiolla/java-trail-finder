@@ -1,9 +1,9 @@
-package lu.karpychev.service;
+package lu.karpychev.trailfinder.service;
 
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import lombok.Data;
-import lu.karpychev.model.GpxFile;
+import lu.karpychev.trailfinder.model.GpxFile;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
