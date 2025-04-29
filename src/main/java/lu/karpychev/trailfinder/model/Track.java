@@ -7,13 +7,15 @@ import lombok.*;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import java.util.UUID;
+
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "trk")
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class Track {
-    private int id;
+    private UUID id;
     @XmlElement
     private String name;
     @XmlElement(name = "desc")

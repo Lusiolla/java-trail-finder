@@ -30,15 +30,21 @@ public class TrackDaoImpl implements TrackDao {
 
     @Override
     public Track add(Track newTrack) throws FileNotFoundException {
+        newTrack.setId(UUID.randomUUID());
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
-                .withTableName("tracks")
-                .usingGeneratedKeyColumns("id");
-        return findById(simpleJdbcInsert.executeAndReturnKey(trackToMap(newTrack)).intValue());
+                .withTableName("tracks");
+        simpleJdbcInsert.execute(trackToMap(newTrack));
+        return findById(newTrack.getId());
     }
 
 
-    public Track findById(long id) throws FileNotFoundException {
-        Optional<Track> track = jdbcTemplate.query(FIND_BY_ID_TRACK, (rs, rowNum) -> makeTrack(rs), id).stream().findFirst();
+    public Track findById(UUID id) throws FileNotFoundException {
+        Optional<Track> track = jdbcTemplate
+                .query(FIND_BY_ID_TRACK,
+                        (rs, rowNum) -> makeTrack(rs), id)
+                .stream()
+                .findFirst();
+
         if (track.isPresent()) {
             return track.get();
         } else {
@@ -49,6 +55,7 @@ public class TrackDaoImpl implements TrackDao {
 
     private Map<String, Object> trackToMap(Track track) {
         Map<String, Object> values = new HashMap<>();
+        values.put("id", track.getId());
         values.put("name", track.getType());
         values.put("description", track.getDescription());
         values.put("type", track.getType());
@@ -59,7 +66,7 @@ public class TrackDaoImpl implements TrackDao {
 
     private Track makeTrack(ResultSet resultSet) throws SQLException {
         return new Track(
-                resultSet.getInt("id"),
+                (UUID) resultSet.getObject("id"),
                 resultSet.getString("name"),
                 resultSet.getString("description"),
                 resultSet.getString("type"),
@@ -83,6 +90,7 @@ public class TrackDaoImpl implements TrackDao {
         line.setSrid(4326);
         return line;
     }
+
     private List<TrackPoint> fromLineString(PGgeometry points) {
         LineString line = (LineString) points.getGeometry();
         return Arrays.stream(line.getPoints())
