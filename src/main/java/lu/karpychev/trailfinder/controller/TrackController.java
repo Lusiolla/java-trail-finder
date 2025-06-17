@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
+import lu.karpychev.trailfinder.dto.TrackDto;
 import lu.karpychev.trailfinder.model.Track;
 import lu.karpychev.trailfinder.model.User;
 import lu.karpychev.trailfinder.service.GpxFileService;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @RestController
@@ -37,5 +39,12 @@ public class TrackController {
     @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public User echoXmlUser(@RequestBody User user) {
         return user;
+    }
+
+    @RequestMapping("/distance/{lat}/{lon}")
+    @ResponseBody
+    @GetMapping
+    public TrackDto getNearestTrack(@PathVariable Double lat, @PathVariable Double lon) throws FileNotFoundException {
+        return trackService.getNearestTrack(lat, lon);
     }
 }

@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE "tracks" (
   "id" UUID PRIMARY KEY,
-  "name" varchar(120) NOT NULL,
+  "name" varchar(120),
   "description" varchar (255),
   "type" varchar (120),
   "duration" time,

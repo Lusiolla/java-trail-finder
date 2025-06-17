@@ -2,6 +2,7 @@ package lu.karpychev.trailfinder.dao.impl;
 
 import lombok.RequiredArgsConstructor;
 import lu.karpychev.trailfinder.dao.TrackDao;
+import lu.karpychev.trailfinder.dto.TrackDto;
 import lu.karpychev.trailfinder.model.Track;
 import lu.karpychev.trailfinder.model.TrackPoint;
 import lu.karpychev.trailfinder.model.TrackSegment;
@@ -23,9 +24,20 @@ public class TrackDaoImpl implements TrackDao {
 
     private final JdbcTemplate jdbcTemplate;
 
+    //private final int SRID = 4326;
+
     private final static String FIND_BY_ID_TRACK = "select * " +
             "from tracks " +
             "where id = ?";
+
+    private final static String FIND_NEAREST_TRACK = "select " +
+            "t.id, " +
+            "t.name, " +
+            "ST_Distance(ST_SetSRID(ST_MakePoint(?, ?), 4326)::geography, t.points::geography) AS distance_meters " +
+            "from tracks t " +
+            "order by " +
+            "distance_meters " +
+            "LIMIT 1";
 
 
     @Override
@@ -35,6 +47,21 @@ public class TrackDaoImpl implements TrackDao {
                 .withTableName("tracks");
         simpleJdbcInsert.execute(trackToMap(newTrack));
         return findById(newTrack.getId());
+    }
+
+    @Override
+    public TrackDto findNearestTrack(double lat, double lon) throws FileNotFoundException {
+        Optional<TrackDto> track = jdbcTemplate.
+                query(FIND_NEAREST_TRACK,
+                        (rs, rowNum) -> makeTrackDto(rs), lon, lat)
+                .stream()
+                .findFirst();
+
+        if (track.isPresent()) {
+            return track.get();
+        } else {
+            throw new FileNotFoundException();
+        }
     }
 
 
@@ -75,6 +102,14 @@ public class TrackDaoImpl implements TrackDao {
         );
     }
 
+    private TrackDto makeTrackDto(ResultSet resultSet) throws SQLException {
+        return new TrackDto(
+                (UUID) resultSet.getObject("id"),
+                resultSet.getString("name"),
+                formatDistance(resultSet.getDouble("distance_meters"))
+        );
+    }
+
     private LineString toLineString(List<TrackPoint> points) {
 
         Point[] postgisPoints = points.stream()
@@ -97,4 +132,18 @@ public class TrackDaoImpl implements TrackDao {
                 .map(p -> new TrackPoint(p.getY(), p.getX(), p.getZ()))
                 .toList();
     }
+
+    public static String formatDistance(double meters) {
+        if (meters < 1000) {
+            return Math.round(meters) + " м";
+        } else if (meters < 10000) {
+            double km = Math.round(meters / 100.0) / 10.0; // округляем до 1 знака после запятой
+            return km + " км";
+        } else {
+            int km = (int) Math.round(meters / 1000.0);
+            return km + " км";
+        }
+    }
+
+
 }

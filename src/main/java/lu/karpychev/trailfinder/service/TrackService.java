@@ -2,8 +2,10 @@ package lu.karpychev.trailfinder.service;
 
 import lombok.Data;
 import lu.karpychev.trailfinder.dao.TrackDao;
+import lu.karpychev.trailfinder.dto.TrackDto;
 import lu.karpychev.trailfinder.model.GpxFile;
 import lu.karpychev.trailfinder.model.Track;
+import org.postgis.Point;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +20,9 @@ public class TrackService {
 
     public Track createTrackFromFile(GpxFile file) throws FileNotFoundException {
         return trackDao.add(file.getTrack());
+    }
+
+    public TrackDto getNearestTrack(double lat, double lon) throws FileNotFoundException {
+        return trackDao.findNearestTrack(lat, lon);
     }
 }
