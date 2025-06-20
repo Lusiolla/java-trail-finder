@@ -3,7 +3,6 @@ package lu.karpychev.trailfinder.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lu.karpychev.trailfinder.model.TrackSegment;
 
 import java.util.UUID;
 
