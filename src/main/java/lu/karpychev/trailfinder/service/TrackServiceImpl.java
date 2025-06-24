@@ -4,6 +4,7 @@ import lombok.Data;
 import lu.karpychev.trailfinder.dao.TrackDao;
 import lu.karpychev.trailfinder.dto.TrackDto;
 import lu.karpychev.trailfinder.model.GpxFile;
+import lu.karpychev.trailfinder.model.Metadata;
 import lu.karpychev.trailfinder.model.Track;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,14 @@ public class TrackServiceImpl implements TrackService {
         newTrack.setId(UUID.randomUUID());
         trackDao.add(newTrack);
         return newTrack.getId();
+    }
+
+    private void addMetadata (Metadata metadata) {
+
+    }
+
+    private void addGpxData(GpxFile file) {
+
     }
 
     @Override
