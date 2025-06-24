@@ -1,4 +1,4 @@
-package lu.karpychev.trailfinder.service;
+package lu.karpychev.trailfinder.service.impl;
 
 import lombok.Data;
 import lu.karpychev.trailfinder.dao.TrackDao;
@@ -6,6 +6,7 @@ import lu.karpychev.trailfinder.dto.TrackDto;
 import lu.karpychev.trailfinder.model.GpxFile;
 import lu.karpychev.trailfinder.model.Metadata;
 import lu.karpychev.trailfinder.model.Track;
+import lu.karpychev.trailfinder.service.TrackService;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -20,19 +21,10 @@ public class TrackServiceImpl implements TrackService {
     private final TrackDao trackDao;
 
     @Override
-    public UUID createTrackFromFile(GpxFile file) throws FileNotFoundException {
-        Track newTrack = file.getTrack();
+    public UUID createTrack(Track newTrack) throws FileNotFoundException {
         newTrack.setId(UUID.randomUUID());
         trackDao.add(newTrack);
         return newTrack.getId();
-    }
-
-    private void addMetadata (Metadata metadata) {
-
-    }
-
-    private void addGpxData(GpxFile file) {
-
     }
 
     @Override
@@ -43,11 +35,6 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public Track getTrackById(UUID trackId) throws FileNotFoundException {
         return trackDao.findById(trackId);
-    }
-
-    @Override
-    public GpxFile getGpxFileById(UUID trackId) {
-        return null;
     }
 
 }

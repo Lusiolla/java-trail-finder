@@ -16,7 +16,7 @@ CREATE TABLE "tracks" (
   "name" varchar(120),
   "description" varchar (255),
   "type" varchar (120),
-  "duration" time,
+  "duration" time, private final JdbcTemplate jdbcTemplate;
   "complexity" varchar(120),
   "points" geometry(LineStringZ, 4326) NOT NULL
 );

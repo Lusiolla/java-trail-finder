@@ -8,11 +8,11 @@ import java.io.FileNotFoundException;
 import java.util.UUID;
 
 public interface TrackService {
-    UUID createTrackFromFile(GpxFile file) throws FileNotFoundException;
+    UUID createTrack(Track newTrack) throws FileNotFoundException;
 
     TrackDto getNearestTrack(double lat, double lon) throws FileNotFoundException;
 
-    GpxFile getGpxFileById(UUID trackId);
+
 
     Track getTrackById (UUID tackId) throws FileNotFoundException;
 }

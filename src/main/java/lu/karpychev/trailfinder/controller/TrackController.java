@@ -6,16 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 
 
 import lu.karpychev.trailfinder.dto.TrackDto;
-import lu.karpychev.trailfinder.model.GpxFile;
 import lu.karpychev.trailfinder.model.Track;
 import lu.karpychev.trailfinder.model.User;
 import lu.karpychev.trailfinder.service.GpxFileService;
-import lu.karpychev.trailfinder.service.TrackServiceImpl;
+import lu.karpychev.trailfinder.service.TrackService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
@@ -26,14 +26,14 @@ import java.util.UUID;
 @AllArgsConstructor
 public class TrackController {
 
-    private final TrackServiceImpl trackService;
-    private final GpxFileService service;
+    private final TrackService trackService;
+    private final GpxFileService gpxFileService;
 
     @RequestMapping("/tracks")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public UUID echoXmlTrack(@RequestParam("file") MultipartFile file) throws JAXBException, IOException {
-        return trackService.createTrackFromFile(service.unmarshalTrack(file));
+    public void addGpxFile(@RequestParam("file") MultipartFile file) throws JAXBException, IOException {
+        gpxFileService.addGpxFileToDatabase(file);
     }
 
     @RequestMapping("/users")
@@ -53,8 +53,8 @@ public class TrackController {
     @RequestMapping("/tracks/gpx/{trackId}")
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-    public GpxFile getGpxFileById(@PathVariable UUID trackId) throws FileNotFoundException {
-        return trackService.getGpxFileById(trackId);
+    public File getGpxFileById(@PathVariable UUID trackId) throws IOException, JAXBException {
+        return gpxFileService.getGpxFileByTrackId(trackId);
     }
 
     @RequestMapping("/tracks/{trackId}")
