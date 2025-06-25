@@ -21,10 +21,10 @@ public class TrackServiceImpl implements TrackService {
     private final TrackDao trackDao;
 
     @Override
-    public UUID createTrack(Track newTrack) throws FileNotFoundException {
+    public Track createTrack(Track newTrack) {
         newTrack.setId(UUID.randomUUID());
         trackDao.add(newTrack);
-        return newTrack.getId();
+        return newTrack;
     }
 
     @Override

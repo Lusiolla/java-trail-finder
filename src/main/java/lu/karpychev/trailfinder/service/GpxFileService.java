@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface GpxFileService {
 
-    void addGpxFileToDatabase (MultipartFile file) throws JAXBException, IOException;
+    void addGpxFileToDatabase(MultipartFile file) throws JAXBException, IOException;
 
     File getGpxFileByTrackId(UUID trackId) throws JAXBException, IOException;
 

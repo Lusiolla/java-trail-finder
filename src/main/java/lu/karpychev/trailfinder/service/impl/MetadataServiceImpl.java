@@ -17,9 +17,9 @@ public class MetadataServiceImpl implements MetadataService {
     private final MetadataDao metadataDao;
 
     @Override
-    public void addMetadata(Metadata metadata, UUID track_id) {
+    public long addMetadata(Metadata metadata, UUID trackId) {
 
-        metadataDao.add(metadata, track_id);
+        return metadataDao.add(metadata, trackId);
     }
 }
 

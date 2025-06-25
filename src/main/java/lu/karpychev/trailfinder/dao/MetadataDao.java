@@ -6,5 +6,5 @@ import java.util.UUID;
 
 public interface MetadataDao {
 
-    void add (Metadata metadata, UUID track_id);
+    long add(Metadata metadata, UUID track_id);
 }

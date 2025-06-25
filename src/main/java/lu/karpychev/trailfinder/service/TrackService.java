@@ -8,11 +8,9 @@ import java.io.FileNotFoundException;
 import java.util.UUID;
 
 public interface TrackService {
-    UUID createTrack(Track newTrack) throws FileNotFoundException;
+    Track createTrack(Track newTrack) throws FileNotFoundException;
 
     TrackDto getNearestTrack(double lat, double lon) throws FileNotFoundException;
-
-
 
     Track getTrackById (UUID tackId) throws FileNotFoundException;
 }

@@ -30,10 +30,12 @@ public class GpxFileServiceImpl implements GpxFileService {
 
 
     public void addGpxFileToDatabase(MultipartFile file) throws JAXBException, IOException {
-        GpxFile gpxFile = unmarshalTrack(file);
-        UUID trackId = trackService.createTrack(gpxFile.getTrack());
-        metadataService.addMetadata(gpxFile.getMetadata(), trackId);
-        gpxFileDao.add(gpxFile);
+        GpxFile gpxFile = unmarshalGpxFile(file);
+
+        gpxFile.setTrack(trackService.createTrack(gpxFile.getTrack()));
+        long metadataId = metadataService.addMetadata(gpxFile.getMetadata(), gpxFile.getTrack().getId());
+
+        gpxFileDao.add(gpxFile, metadataId);
     }
 
     @Override
@@ -55,10 +57,11 @@ public class GpxFileServiceImpl implements GpxFileService {
     }
 
 
-    private GpxFile unmarshalTrack(MultipartFile file) throws JAXBException, IOException {
+    private GpxFile unmarshalGpxFile(MultipartFile file) throws JAXBException, IOException {
         JAXBContext context = JAXBContext.newInstance(GpxFile.class);
         return (GpxFile) context.createUnmarshaller()
                 .unmarshal(new InputStreamReader(file.getInputStream()));
     }
 
 }
+
