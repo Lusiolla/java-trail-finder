@@ -1,8 +1,7 @@
 package lu.karpychev.trailfinder.mapper;
 
 
-import lu.karpychev.trailfinder.model.TrackAuthor;
-import lu.karpychev.trailfinder.model.TrackLink;
+import lu.karpychev.trailfinder.model.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +21,11 @@ public class MetadataMapper {
 
     public static Map<String, Object> trackLinkToMap(TrackLink link) {
         Map<String, Object> values = new HashMap<>();
-        values.put("url", link.getURL());
+        if (link == null) {
+            values.put("url", null);
+        } else {
+            values.put("url", link.getURL());
+        }
         return values;
     }
 
@@ -31,4 +34,5 @@ public class MetadataMapper {
         values.put("author_name", author.getName());
         return values;
     }
+
 }

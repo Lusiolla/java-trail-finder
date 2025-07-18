@@ -6,16 +6,20 @@ import lombok.extern.slf4j.Slf4j;
 
 
 import lu.karpychev.trailfinder.dto.TrackDto;
+import lu.karpychev.trailfinder.mapper.XmlMapper;
+import lu.karpychev.trailfinder.model.GpxFile;
 import lu.karpychev.trailfinder.model.Track;
 import lu.karpychev.trailfinder.model.User;
 import lu.karpychev.trailfinder.service.GpxFileService;
 import lu.karpychev.trailfinder.service.TrackService;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
@@ -32,8 +36,8 @@ public class TrackController {
     @RequestMapping("/tracks")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void addGpxFile(@RequestParam("file") MultipartFile file) throws JAXBException, IOException {
-        gpxFileService.addGpxFileToDatabase(file);
+    public UUID addGpxFile(@RequestParam("file") MultipartFile file) throws JAXBException, IOException {
+        return gpxFileService.addGpxFileToDatabase(file);
     }
 
     @RequestMapping("/users")
@@ -50,11 +54,20 @@ public class TrackController {
         return trackService.getNearestTrack(lat, lon);
     }
 
-    @RequestMapping("/tracks/gpx/{trackId}")
+    @GetMapping(
+            value = "/tracks/gpx/{trackId}",
+            produces = MediaType.APPLICATION_XML_VALUE
+    )
     @ResponseBody
-    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-    public File getGpxFileById(@PathVariable UUID trackId) throws IOException, JAXBException {
-        return gpxFileService.getGpxFileByTrackId(trackId);
+    public ResponseEntity<ByteArrayResource> getGpxFileById(
+            @PathVariable UUID trackId
+    ) throws IOException, JAXBException {
+        GpxFile gpxFile = gpxFileService.getGpxFileByTrackId(trackId);
+        String fileName = gpxFile.getTrack().getName() + ".gpx";
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; fileName=\"" + fileName + "\"")
+                .body(XmlMapper.marshal(gpxFile));
+
     }
 
     @RequestMapping("/tracks/{trackId}")

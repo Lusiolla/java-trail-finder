@@ -22,19 +22,19 @@ public class MetadataDaoImpl implements MetadataDao {
     public long add(Metadata metadata, UUID track_id) {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 
-        long linkId = simpleJdbcInsert
+        long linkId = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("track_links")
                 .usingGeneratedKeyColumns("link_id")
                 .executeAndReturnKey(trackLinkToMap(metadata.getLink()))
                 .longValue();
 
-        long authorId = simpleJdbcInsert
+        long authorId = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("track_authors")
                 .usingGeneratedKeyColumns("author_id")
                 .executeAndReturnKey(trackAuthorToMap(metadata.getAuthor()))
                 .longValue();
 
-        return simpleJdbcInsert
+        return new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("metadata")
                 .usingGeneratedKeyColumns("metadata_id")
                 .executeAndReturnKey(metadataToMap(metadata.getName(), track_id, linkId, authorId))
