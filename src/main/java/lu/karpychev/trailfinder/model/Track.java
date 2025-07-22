@@ -1,4 +1,4 @@
-package lu.karpychev.model;
+package lu.karpychev.trailfinder.model;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -7,11 +7,15 @@ import lombok.*;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import java.util.UUID;
+
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "trk")
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class Track {
-    private Long id;
+    private UUID id;
     @XmlElement
     private String name;
     @XmlElement(name = "desc")
@@ -19,5 +23,5 @@ public class Track {
     @XmlElement
     private String type;
     @XmlElement(name = "trkseg")
-    private TrackSegment segment;
+    private TrackSegment segments;
 }

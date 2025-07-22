@@ -1,13 +1,15 @@
-package lu.karpychev.model;
+package lu.karpychev.trailfinder.model;
 
 import jakarta.xml.bind.annotation.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @XmlRootElement(name = "gpx", namespace = "http://www.topografix.com/GPX/1/1")
 @XmlAccessorType(XmlAccessType.FIELD)
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class GpxFile {
     @XmlAttribute
     private String version;
@@ -18,5 +20,5 @@ public class GpxFile {
     @XmlElement
     private Metadata metadata;
     @XmlElement(name = "trk", namespace = "http://www.topografix.com/GPX/1/1")
-    private List<Track> tracks;
+    private Track track;
 }

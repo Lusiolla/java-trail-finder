@@ -5,7 +5,7 @@
         xmlns = @XmlNs(prefix = "", namespaceURI = "http://www.topografix.com/GPX/1/1"))
 
 
-package lu.karpychev.model;
+package lu.karpychev.trailfinder.model;
 
 import jakarta.xml.bind.annotation.XmlNsForm;
 import jakarta.xml.bind.annotation.XmlNs;
