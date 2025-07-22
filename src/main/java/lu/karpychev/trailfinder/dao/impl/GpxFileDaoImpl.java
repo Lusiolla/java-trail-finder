@@ -54,7 +54,6 @@ public class GpxFileDaoImpl implements GpxFileDao {
                         (rs, rowNum) -> makeGpxFile(rs), id)
                 .stream()
                 .findFirst();
-
         if (gpxFile.isPresent()) {
             return gpxFile.get();
         } else {

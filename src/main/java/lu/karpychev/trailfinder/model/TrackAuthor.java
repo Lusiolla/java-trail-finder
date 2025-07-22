@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @XmlRootElement(name = "author")
 @XmlAccessorType(XmlAccessType.FIELD)

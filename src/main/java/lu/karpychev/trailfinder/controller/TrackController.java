@@ -33,46 +33,37 @@ public class TrackController {
     private final TrackService trackService;
     private final GpxFileService gpxFileService;
 
-    @RequestMapping("/tracks")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/tracks", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UUID addGpxFile(@RequestParam("file") MultipartFile file) throws JAXBException, IOException {
         return gpxFileService.addGpxFileToDatabase(file);
     }
 
-    @RequestMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+    @PostMapping(value = "/users", consumes = MediaType.APPLICATION_XML_VALUE)
     public User echoXmlUser(@RequestBody User user) {
         return user;
     }
 
-    @RequestMapping("/distance/{lat}/{lon}")
-    @ResponseBody
-    @GetMapping
+
+    @GetMapping("/distance/{lat}/{lon}")
     public TrackDto getNearestTrack(@PathVariable Double lat, @PathVariable Double lon) throws FileNotFoundException {
         return trackService.getNearestTrack(lat, lon);
     }
 
-    @GetMapping(
-            value = "/tracks/gpx/{trackId}",
-            produces = MediaType.APPLICATION_XML_VALUE
-    )
-    @ResponseBody
+    @GetMapping(value = "/tracks/gpx/{trackId}", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<ByteArrayResource> getGpxFileById(
             @PathVariable UUID trackId
-    ) throws IOException, JAXBException {
+    ) throws JAXBException, FileNotFoundException {
         GpxFile gpxFile = gpxFileService.getGpxFileByTrackId(trackId);
         String fileName = gpxFile.getTrack().getName() + ".gpx";
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; fileName=\"" + fileName + "\"")
                 .body(XmlMapper.marshal(gpxFile));
-
     }
 
-    @RequestMapping("/tracks/{trackId}")
-    @ResponseBody
-    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(value = "/tracks/{trackId}")
     public Track getTrackById(@PathVariable UUID trackId) throws FileNotFoundException {
         return trackService.getTrackById(trackId);
     }

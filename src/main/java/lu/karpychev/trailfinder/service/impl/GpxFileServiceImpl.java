@@ -40,7 +40,7 @@ public class GpxFileServiceImpl implements GpxFileService {
     }
 
     @Override
-    public GpxFile getGpxFileByTrackId(UUID trackId) throws JAXBException, IOException {
+    public GpxFile getGpxFileByTrackId(UUID trackId) throws FileNotFoundException {
         return gpxFileDao.findByIdTrack(trackId);
     }
 
