@@ -1,0 +1,25 @@
+
+services:
+
+  db:
+    image: postgis/postgis:16-3.5-alpine
+
+    environment:
+      - POSTGRES_DB=trails
+      - POSTGRES_USER=finder
+      - POSTGRES_PASSWORD=ege_gey
+
+  server:
+    build: .
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - db
+
+    environment:
+      - DB_NAME=trails
+      - POSTGRES_USER=finder
+      - POSTGRES_PASSWORD=ege_gey
+      - DB_HOST=db
+      - DB_PORT=5432
