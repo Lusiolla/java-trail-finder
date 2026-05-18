@@ -2,12 +2,14 @@
 services:
 
   db:
-    image: postgis/postgis:16-3.5-alpine
+    image: postgis/postgis:15-3.3-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
     environment:
       - POSTGRES_DB=trails
       - POSTGRES_USER=finder
-      - POSTGRES_PASSWORD=ege_gey
+      - POSTGRES_PASSWORD=auu_Auu!
 
   server:
     build: .
@@ -20,6 +22,9 @@ services:
     environment:
       - DB_NAME=trails
       - POSTGRES_USER=finder
-      - POSTGRES_PASSWORD=ege_gey
+      - POSTGRES_PASSWORD=auu_Auu!
       - DB_HOST=db
       - DB_PORT=5432
+      
+volumes:
+  postgres_data:
