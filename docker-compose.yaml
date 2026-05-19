@@ -12,7 +12,7 @@ services:
       - POSTGRES_PASSWORD=auu_Auu!
 
   server:
-    build: .
+    image: lusiolla/trailfinder:v0.1.1_alpha_2026-05-19
     ports:
       - "8080:8080"
 
@@ -25,6 +25,6 @@ services:
       - POSTGRES_PASSWORD=auu_Auu!
       - DB_HOST=db
       - DB_PORT=5432
-      
+
 volumes:
   postgres_data:

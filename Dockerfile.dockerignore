@@ -1,0 +1,7 @@
+../.idea
+.git
+.gitignore
+build
+out
+*.iml
+*.log
