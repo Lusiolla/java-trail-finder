@@ -48,16 +48,11 @@ public class GpxFileDaoImpl implements GpxFileDao {
 
     }
 
-    public GpxFile findByIdTrack(UUID id) throws FileNotFoundException {
-        Optional<GpxFile> gpxFile = jdbcTemplate
+    public Optional<GpxFile> findByIdTrack(UUID id) {
+        return jdbcTemplate
                 .query(FIND_BY_ID_TRACK,
                         (rs, rowNum) -> makeGpxFile(rs), id)
                 .stream()
                 .findFirst();
-        if (gpxFile.isPresent()) {
-            return gpxFile.get();
-        } else {
-            throw new FileNotFoundException();
-        }
     }
 }

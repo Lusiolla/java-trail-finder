@@ -3,11 +3,12 @@ package lu.karpychev.trailfinder.dao;
 import lu.karpychev.trailfinder.model.GpxFile;
 
 import java.io.FileNotFoundException;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface GpxFileDao {
 
     void add(GpxFile gpxFile, long metadataId);
 
-    GpxFile findByIdTrack(UUID id) throws FileNotFoundException;
+    Optional<GpxFile> findByIdTrack(UUID id);
 }

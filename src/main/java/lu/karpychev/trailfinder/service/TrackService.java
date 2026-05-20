@@ -12,7 +12,7 @@ public interface TrackService {
 
     TrackDto getNearestTrack(double lat, double lon) throws FileNotFoundException;
 
-    Track getTrackById (UUID tackId) throws FileNotFoundException;
+    Track getTrackById (UUID tackId);
 }
 
 

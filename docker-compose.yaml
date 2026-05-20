@@ -1,4 +1,4 @@
-
+name: trailfinder
 services:
 
   db:
@@ -12,7 +12,9 @@ services:
       - POSTGRES_PASSWORD=auu_Auu!
 
   server:
-    image: lusiolla/trailfinder:v0.1.1_alpha_2026-05-19
+    #image: lusiolla/trailfinder:v0.1.1_alpha_2026-05-19
+    build: .
+
     ports:
       - "8080:8080"
 

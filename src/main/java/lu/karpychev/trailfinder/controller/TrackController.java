@@ -52,19 +52,16 @@ public class TrackController {
     }
 
     @GetMapping(value = "/tracks/gpx/{trackId}", produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<ByteArrayResource> getGpxFileById(
-            @PathVariable UUID trackId
-    ) throws JAXBException, FileNotFoundException {
+    public ResponseEntity<ByteArrayResource> getGpxFileById(@PathVariable UUID trackId) throws JAXBException {
         GpxFile gpxFile = gpxFileService.getGpxFileByTrackId(trackId);
         String fileName = gpxFile.getTrack().getName() + ".gpx";
-
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; fileName=\"" + fileName + "\"")
                 .body(XmlMapper.marshal(gpxFile));
     }
 
     @GetMapping(value = "/tracks/{trackId}")
-    public Track getTrackById(@PathVariable UUID trackId) throws FileNotFoundException {
+    public Track getTrackById(@PathVariable UUID trackId) {
         return trackService.getTrackById(trackId);
     }
 }

@@ -3,6 +3,7 @@ package lu.karpychev.trailfinder.dao.impl;
 import lombok.RequiredArgsConstructor;
 import lu.karpychev.trailfinder.dao.TrackDao;
 import lu.karpychev.trailfinder.dto.TrackDto;
+import lu.karpychev.trailfinder.exception.ObjectNotFoundException;
 import lu.karpychev.trailfinder.model.Track;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -58,18 +59,12 @@ public class TrackDaoImpl implements TrackDao {
     }
 
     @Override
-    public Track findById(UUID id) throws FileNotFoundException {
-        Optional<Track> track = jdbcTemplate
+    public Optional<Track> findById(UUID id) {
+
+        return jdbcTemplate
                 .query(FIND_BY_ID_TRACK,
                         (rs, rowNum) -> makeTrack(rs), id)
                 .stream()
                 .findFirst();
-
-        if (track.isPresent()) {
-            return track.get();
-        } else {
-            throw new FileNotFoundException();
-        }
     }
-
 }

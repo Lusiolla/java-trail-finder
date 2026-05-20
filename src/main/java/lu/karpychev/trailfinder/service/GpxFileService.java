@@ -12,6 +12,6 @@ public interface GpxFileService {
 
     UUID addGpxFileToDatabase(MultipartFile file) throws JAXBException, IOException;
 
-    GpxFile getGpxFileByTrackId(UUID trackId) throws FileNotFoundException;
+    GpxFile getGpxFileByTrackId(UUID trackId);
 
 }

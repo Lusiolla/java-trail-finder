@@ -3,6 +3,7 @@ package lu.karpychev.trailfinder.service.impl;
 import lombok.Data;
 import lu.karpychev.trailfinder.dao.TrackDao;
 import lu.karpychev.trailfinder.dto.TrackDto;
+import lu.karpychev.trailfinder.exception.ObjectNotFoundException;
 import lu.karpychev.trailfinder.model.GpxFile;
 import lu.karpychev.trailfinder.model.Metadata;
 import lu.karpychev.trailfinder.model.Track;
@@ -33,8 +34,8 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public Track getTrackById(UUID trackId) throws FileNotFoundException {
-        return trackDao.findById(trackId);
+    public Track getTrackById(UUID trackId)  {
+        return trackDao.findById(trackId).orElseThrow(() -> new ObjectNotFoundException("Track", trackId));
     }
 
 }
