@@ -9,10 +9,12 @@ services:
     environment:
       - POSTGRES_DB=trails
       - POSTGRES_USER=finder
-      - POSTGRES_PASSWORD=auu_Auu!
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
+    secrets:
+      - db_password
 
   server:
-    #image: lusiolla/trailfinder:v0.1.1_alpha_2026-05-19
+    #image: lusiolla/trailfinder:v0.1.1_alpha_2026-05-22
     build: .
 
     ports:
@@ -24,9 +26,15 @@ services:
     environment:
       - DB_NAME=trails
       - POSTGRES_USER=finder
-      - POSTGRES_PASSWORD=auu_Auu!
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
       - DB_HOST=db
       - DB_PORT=5432
+    secrets:
+      - db_password
+
+secrets:
+  db_password:
+    file: ./secrets/db_password
 
 volumes:
   postgres_data:
