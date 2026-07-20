@@ -4,6 +4,7 @@ import lu.karpychev.trailfinder.dto.TrackDto;
 import lu.karpychev.trailfinder.model.Track;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,6 +14,8 @@ public interface TrackDao {
 
     Optional<Track> findById(UUID id);
 
-    TrackDto findNearestTrack (double lat, double lon) throws FileNotFoundException;
+    List<TrackDto> findNearestTrack (double lat, double lon) throws FileNotFoundException;
+
+    void delete(UUID id);
 
 }

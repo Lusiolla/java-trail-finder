@@ -22,12 +22,12 @@ import java.util.List;
 @Component
 public class ErrorHandlingControllerAdvice {
 
-    @ExceptionHandler(ObjectNotFoundException.class)
+    @ExceptionHandler(TrackNotFoundException.class)
     @ResponseBody
-    protected ResponseEntity<Object> handleNotFound(ObjectNotFoundException ex) {
+    protected ResponseEntity<Object> handleNotFound(TrackNotFoundException ex) {
         ApiError apiError = new ApiError(
                 HttpStatus.NOT_FOUND,
-                "The required object was not found.",
+                "Track was not found.",
                 ex.getMessage(),
                 LocalDateTime.now(),
                 new ArrayList<>()

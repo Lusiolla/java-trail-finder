@@ -1,21 +1,21 @@
 package lu.karpychev.trailfinder.dao.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lu.karpychev.trailfinder.dao.TrackDao;
 import lu.karpychev.trailfinder.dto.TrackDto;
-import lu.karpychev.trailfinder.exception.ObjectNotFoundException;
 import lu.karpychev.trailfinder.model.Track;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 
-import java.io.FileNotFoundException;
 import java.util.*;
 
 import static lu.karpychev.trailfinder.mapper.TrackMapper.*;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class TrackDaoImpl implements TrackDao {
 
     private final JdbcTemplate jdbcTemplate;
@@ -34,6 +34,9 @@ public class TrackDaoImpl implements TrackDao {
             "order by " +
             "distance_meters " +
             "LIMIT 3";
+    private final static String DELETE_TRACK = "delete " +
+            "from tracks " +
+            "where id = ?";
 
 
     @Override
@@ -44,27 +47,27 @@ public class TrackDaoImpl implements TrackDao {
     }
 
     @Override
-    public TrackDto findNearestTrack(double lat, double lon) throws FileNotFoundException {
-        Optional<TrackDto> track = jdbcTemplate.
+    public List<TrackDto> findNearestTrack(double lat, double lon)  {
+        return jdbcTemplate.
                 query(FIND_NEAREST_TRACK,
-                        (rs, rowNum) -> makeTrackDto(rs), lon, lat)
-                .stream()
-                .findFirst();
+                        (rs, rowNum) -> makeTrackDto(rs), lon, lat);
 
-        if (track.isPresent()) {
-            return track.get();
-        } else {
-            throw new FileNotFoundException();
-        }
     }
 
     @Override
     public Optional<Track> findById(UUID id) {
-
         return jdbcTemplate
                 .query(FIND_BY_ID_TRACK,
                         (rs, rowNum) -> makeTrack(rs), id)
                 .stream()
                 .findFirst();
     }
+
+    @Override
+    public void delete(UUID id) {
+        if (jdbcTemplate.update(DELETE_TRACK, id) < 1) {
+            log.info("Что-то пошло не так, трек {} не был найден", id);
+        }
+    }
+
 }

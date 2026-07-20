@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -47,7 +48,7 @@ public class TrackController {
 
 
     @GetMapping("/distance/{lat}/{lon}")
-    public TrackDto getNearestTrack(@PathVariable Double lat, @PathVariable Double lon) throws FileNotFoundException {
+    public List<TrackDto> getNearestTrack(@PathVariable Double lat, @PathVariable Double lon) throws FileNotFoundException {
         return trackService.getNearestTrack(lat, lon);
     }
 
@@ -64,4 +65,12 @@ public class TrackController {
     public Track getTrackById(@PathVariable UUID trackId) {
         return trackService.getTrackById(trackId);
     }
+
+    @DeleteMapping("/tracks/{trackId}")
+    public UUID delete(@PathVariable UUID trackId) {
+        trackService.delete(trackId);
+        log.info("The track {} delete.", trackId);
+        return trackId;
+    }
+
 }

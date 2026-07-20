@@ -3,7 +3,7 @@ package lu.karpychev.trailfinder.service.impl;
 import jakarta.xml.bind.JAXBException;
 import lombok.Data;
 import lu.karpychev.trailfinder.dao.GpxFileDao;
-import lu.karpychev.trailfinder.exception.ObjectNotFoundException;
+import lu.karpychev.trailfinder.exception.TrackNotFoundException;
 import lu.karpychev.trailfinder.mapper.XmlMapper;
 import lu.karpychev.trailfinder.model.GpxFile;
 import lu.karpychev.trailfinder.service.GpxFileService;
@@ -35,6 +35,7 @@ public class GpxFileServiceImpl implements GpxFileService {
         gpxFile.setTrack(trackService.createTrack(gpxFile.getTrack()));
         long metadataId = metadataService.addMetadata(gpxFile.getMetadata(), gpxFile.getTrack().getId());
 
+
         gpxFileDao.add(gpxFile, metadataId);
 
         return gpxFile.getTrack().getId();
@@ -42,7 +43,7 @@ public class GpxFileServiceImpl implements GpxFileService {
 
     @Override
     public GpxFile getGpxFileByTrackId(UUID trackId) {
-        return gpxFileDao.findByIdTrack(trackId).orElseThrow(() -> new ObjectNotFoundException("GPXFile", trackId));
+        return gpxFileDao.findByIdTrack(trackId).orElseThrow(() -> new TrackNotFoundException("GPXFile", trackId));
     }
 
 }

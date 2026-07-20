@@ -42,10 +42,8 @@ public class GpxFileDaoImpl implements GpxFileDao {
     @Override
     public void add(GpxFile gpxFile, long metadataId) {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
-                .withTableName("gpx_files")
-                .usingGeneratedKeyColumns("gpx_id");
+                .withTableName("gpx_files");
         simpleJdbcInsert.execute(gpxFileToMap(gpxFile, metadataId));
-
     }
 
     public Optional<GpxFile> findByIdTrack(UUID id) {
