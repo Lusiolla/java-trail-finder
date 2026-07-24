@@ -1,14 +1,14 @@
 DROP TABLE IF EXISTS users;
 
-DROP TABLE IF EXISTS tracks;
+DROP TABLE IF EXISTS tracks CASCADE;
 
-DROP TABLE IF EXISTS metadata;
+DROP TABLE IF EXISTS metadata CASCADE;
 
-DROP TABLE IF EXISTS track_authors;
+DROP TABLE IF EXISTS track_authors CASCADE;
 
-DROP TABLE IF EXISTS track_links;
+DROP TABLE IF EXISTS track_links CASCADE;
 
-DROP TABLE IF EXISTS gpx_files;
+DROP TABLE IF EXISTS gpx_files CASCADE;
 
 CREATE EXTENSION IF NOT EXISTS postgis;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -46,8 +46,7 @@ CREATE TABLE IF NOT EXISTS "gpx_files" (
   "version" varchar(120),
   "creator" varchar(120),
   "schema_location" varchar(120),
-  "metadata_id" bigint,
-
+  "metadata_id" bigint
 );
 
 CREATE TABLE IF NOT EXISTS "users" (

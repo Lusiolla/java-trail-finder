@@ -3,7 +3,7 @@ package lu.karpychev.trailfinder.service.impl;
 import lombok.Data;
 import lu.karpychev.trailfinder.dao.TrackDao;
 import lu.karpychev.trailfinder.dto.TrackDto;
-import lu.karpychev.trailfinder.exception.TrackNotFoundException;
+import lu.karpychev.trailfinder.exception.ObjectNotFoundException;
 import lu.karpychev.trailfinder.model.Track;
 import lu.karpychev.trailfinder.service.TrackService;
 import org.springframework.stereotype.Component;
@@ -28,18 +28,18 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public List<TrackDto> getNearestTrack(double lat, double lon) throws FileNotFoundException {
+    public List<TrackDto> getNearestTrack(double lat, double lon) throws ObjectNotFoundException {
         List<TrackDto> nearestTracks = trackDao.findNearestTrack(lat, lon);
-        if (!nearestTracks.isEmpty()) {
+        if (nearestTracks != null && !nearestTracks.isEmpty()) {
             return nearestTracks;
         } else {
-            throw new FileNotFoundException();
+            throw new ObjectNotFoundException("Nearest tracks was not found");
         }
     }
 
     @Override
-    public Track getTrackById(UUID trackId)  {
-        return trackDao.findById(trackId).orElseThrow(() -> new TrackNotFoundException("Track", trackId));
+    public Track getTrackById(UUID trackId) {
+        return trackDao.findById(trackId).orElseThrow(() -> new ObjectNotFoundException("Track", trackId));
     }
 
     @Override

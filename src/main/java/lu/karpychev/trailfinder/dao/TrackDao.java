@@ -14,7 +14,7 @@ public interface TrackDao {
 
     Optional<Track> findById(UUID id);
 
-    List<TrackDto> findNearestTrack (double lat, double lon) throws FileNotFoundException;
+    List<TrackDto> findNearestTrack (double lat, double lon);
 
     void delete(UUID id);
 

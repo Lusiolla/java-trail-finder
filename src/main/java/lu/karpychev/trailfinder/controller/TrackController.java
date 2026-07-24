@@ -48,7 +48,7 @@ public class TrackController {
 
 
     @GetMapping("/distance/{lat}/{lon}")
-    public List<TrackDto> getNearestTrack(@PathVariable Double lat, @PathVariable Double lon) throws FileNotFoundException {
+    public List<TrackDto> getNearestTrack(@PathVariable Double lat, @PathVariable Double lon) {
         return trackService.getNearestTrack(lat, lon);
     }
 

@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface TrackService {
     Track createTrack(Track newTrack) throws FileNotFoundException;
 
-    List<TrackDto> getNearestTrack(double lat, double lon) throws FileNotFoundException;
+    List<TrackDto> getNearestTrack(double lat, double lon);
 
     Track getTrackById (UUID tackId);
 
